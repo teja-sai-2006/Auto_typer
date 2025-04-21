@@ -1,5 +1,9 @@
 # Auto_typer
-Futures of the application
+
+
+
+
+#Futures of the application
 1)This application is used to simulate typing on the keyboard based on the script the user saved in it
 2)The typing starts when the hotkey set by the user is pressed, and it types automatically based on the script you saved for that hotkey.
 3)It works only when the application runs in the background. If you close it, it turns out to  work
