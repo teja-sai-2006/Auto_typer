@@ -1,0 +1,13 @@
+{
+  "Welcome Message": {
+    "text": "Hllo! This is a sample snippet. You can edit or delete it.",
+    "min_delay": 0.02,
+    "max_delay": 0.08,
+    "backspace_probability": 0.9,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "hotkey": "ctrl+9",
+    "category": "Samples",
+    "history": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "Welcome Message": {
+    "text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "min_delay": 0.5,
+    "max_delay": 1.0,
+    "backspace_probability": 0.5,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "hotkey": "ctrl+8",
+    "category": "Samples",
+    "history": []
+  },
+  "teja": {
+    "text": "svdvwggssvdvwggs",
+    "min_delay": 1.0,
+    "max_delay": 2.0,
+    "backspace_probability": 0.1,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "hotkey": "ctrl+9",
+    "category": "dd",
+    "history": []
+  }
+}
