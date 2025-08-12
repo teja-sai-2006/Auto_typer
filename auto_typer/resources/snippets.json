@@ -1,0 +1,34 @@
+{
+  "Welcome Message": {
+    "text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "min_delay": 0.02,
+    "max_delay": 0.08,
+    "backspace_probability": 0.1,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "uppercase": false,
+    "lowercase": false,
+    "remove_spaces": false,
+    "remove_symbols": false,
+    "keep_alphanumeric_spaces": false,
+    "hotkey": "ctrl+9",
+    "category": "Samples",
+    "history": []
+  },
+  "bcbdh": {
+    "text": "Hello! This is a sam dbwbdhbBFBHBDHFBA   fneuFNFNFNFN",
+    "min_delay": 0.01,
+    "max_delay": 0.1,
+    "backspace_probability": 0.01,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "uppercase": false,
+    "lowercase": false,
+    "remove_spaces": false,
+    "remove_symbols": false,
+    "keep_alphanumeric_spaces": false,
+    "hotkey": "ctrl+8",
+    "category": "jdd",
+    "history": []
+  }
+}
