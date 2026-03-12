@@ -1,0 +1,50 @@
+{
+  "Welcome Message": {
+    "text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "min_delay": 0.02,
+    "max_delay": 0.08,
+    "backspace_probability": 0.1,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "uppercase": false,
+    "lowercase": false,
+    "remove_spaces": false,
+    "remove_symbols": false,
+    "keep_alphanumeric_spaces": false,
+    "hotkey": "ctrl+9",
+    "category": "Samples",
+    "history": []
+  },
+  "bcbdh": {
+    "text": "#!/bin/bash\n\n# -----------------------------\n# CONFIGURATION\n# -----------------------------\n\nVM_NAME=\"Windows11-AutoVM\"\nRAM_MB=12288\nCPUS=6\nDISK_MB=102400\n\nISO_URL=\"https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso\"\n\nISO_NAME=\"windows11.iso\"\n\n# -----------------------------\n\necho \"Starting full Windows VM installation...\"\n\n# Run as root automatically\nif [ \"$EUID\" -ne 0 ]; then\n    echo \"Running with administrator privileges...\"\n    exec sudo bash \"$0\" \"$@\"\nfi\n\nUSER_HOME=$(eval echo \"~$SUDO_USER\")\n\nDOWNLOAD_DIR=\"$USER_HOME/Downloads\"\nISO_PATH=\"$DOWNLOAD_DIR/$ISO_NAME\"\nVM_DIR=\"$USER_HOME/VirtualBox VMs\"\n\necho \"Preparing directories...\"\n\nmkdir -p \"$DOWNLOAD_DIR\"\nmkdir -p \"$VM_DIR\"\n\necho \"Updating system...\"\napt update -y\n\necho \"Installing required packages...\"\napt install -y wget curl dkms build-essential linux-headers-$(uname -r)\n\necho \"Installing VirtualBox...\"\napt install -y virtualbox virtualbox-ext-pack\n\necho \"Downloading Windows ISO...\"\n\nsudo -u $SUDO_USER wget -O \"$ISO_PATH\" \"$ISO_URL\"\n\nif [ ! -f \"$ISO_PATH\" ]; then\n    echo \"ISO download failed!\"\n    exit 1\nfi\n\necho \"Download completed.\"\n\necho \"Checking ISO file...\"\n\nFILE_TYPE=$(file \"$ISO_PATH\")\n\nif [[ $FILE_TYPE != *\"ISO 9660\"* ]]; then\n    echo \"Downloaded file is not a valid ISO!\"\n    exit 1\nfi\n\necho \"ISO verified.\"\n\necho \"Creating Virtual Machine...\"\n\nsudo -u $SUDO_USER VBoxManage createvm \\\n--name \"$VM_NAME\" \\\n--ostype Windows11_64 \\\n--register\n\necho \"Configuring hardware...\"\n\nsudo -u $SUDO_USER VBoxManage modifyvm \"$VM_NAME\" \\\n--memory $RAM_MB \\\n--cpus $CPUS \\\n--vram 256 \\\n--graphicscontroller vmsvga \\\n--accelerate3d on \\\n--clipboard-mode bidirectional \\\n--draganddrop bidirectional \\\n--nic1 nat \\\n--boot1 dvd\n\necho \"Creating virtual disk...\"\n\nsudo -u $SUDO_USER VBoxManage createmedium disk \\\n--filename \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\" \\\n--size $DISK_MB \\\n--format VDI\n\necho \"Creating storage controller...\"\n\nsudo -u $SUDO_USER VBoxManage storagectl \"$VM_NAME\" \\\n--name \"SATA Controller\" \\\n--add sata \\\n--controller IntelAhci\n\necho \"Attaching disk...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 0 \\\n--device 0 \\\n--type hdd \\\n--medium \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\"\n\necho \"Attaching Windows ISO...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 1 \\\n--device 0 \\\n--type dvddrive \\\n--medium \"$ISO_PATH\"\n\necho \"\"\necho \"======================================\"\necho \"Setup Complete\"\necho \"======================================\"\necho \"\"\necho \"Open VirtualBox from Applications\"\necho \"\"\necho \"Start VM: $VM_NAME\"\necho \"\"\necho \"Windows installer will launch.\"\necho \"\"\necho \"======================================\"",
+    "min_delay": 1e-07,
+    "max_delay": 3e-07,
+    "backspace_probability": 0.01,
+    "min_backspaces": 1,
+    "max_backspaces": 2,
+    "uppercase": false,
+    "lowercase": false,
+    "remove_spaces": false,
+    "remove_symbols": false,
+    "keep_alphanumeric_spaces": false,
+    "hotkey": "ctrl+8",
+    "category": "jdd",
+    "history": []
+  },
+  "jhgfd": {
+    "text": "+_)(*&^%$#@!",
+    "min_delay": 1e-08,
+    "max_delay": 2e-07,
+    "backspace_probability": 0.0,
+    "min_backspaces": 1,
+    "max_backspaces": 1,
+    "uppercase": false,
+    "lowercase": false,
+    "remove_spaces": false,
+    "remove_symbols": false,
+    "keep_alphanumeric_spaces": false,
+    "hotkey": "ctrl+shift+9",
+    "category": "vcxz",
+    "history": []
+  }
+}

@@ -1,0 +1,297 @@
+[
+  {
+    "snippet_name": "jhgfd",
+    "typed_text": "+_)(*&^%$#@!",
+    "timestamp": "2026-03-13T05:02:14.607832"
+  },
+  {
+    "snippet_name": "jhgfd",
+    "typed_text": "+_)(*&^%$#@!",
+    "timestamp": "2026-03-13T04:43:20.210978"
+  },
+  {
+    "snippet_name": "Welcome Message",
+    "typed_text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "timestamp": "2026-03-13T04:42:31.703351"
+  },
+  {
+    "snippet_name": "iuytr",
+    "typed_text": "!@#$%^&*()_+~{}|\":?><,./';][1234567890-=`",
+    "timestamp": "2026-03-13T04:40:35.055612"
+  },
+  {
+    "snippet_name": "iuytr",
+    "typed_text": "KJYTRDJHGFDMNBVCREVCGFDGFDE",
+    "timestamp": "2026-03-13T04:39:45.169668"
+  },
+  {
+    "snippet_name": "Welcome Message",
+    "typed_text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "timestamp": "2026-03-13T04:38:48.277115"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#!/bin/bash\n\n# -----------------------------\n# CONFIGURATION\n# -----------------------------\n\nVM_NAME=\"Windows11-AutoVM\"\nRAM_MB=12288\nCPUS=6\nDISK_MB=102400\n\nISO_URL=\"https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso\"\n\nISO_NAME=\"windows11.iso\"\n\n# -----------------------------\n\necho \"Starting full Windows VM installation...\"\n\n# Run as root automatically\nif [ \"$EUID\" -ne 0 ]; then\n    echo \"Running with administrator privileges...\"\n    exec sudo bash \"$0\" \"$@\"\nfi\n\nUSER_HOME=$(eval echo \"~$SUDO_USER\")\n\nDOWNLOAD_DIR=\"$USER_HOME/Downloads\"\nISO_PATH=\"$DOWNLOAD_DIR/$ISO_NAME\"\nVM_DIR=\"$USER_HOME/VirtualBox VMs\"\n\necho \"Preparing directories...\"\n\nmkdir -p \"$DOWNLOAD_DIR\"\nmkdir -p \"$VM_DIR\"\n\necho \"Updating system...\"\napt update -y\n\necho \"Installing required packages...\"\napt install -y wget curl dkms build-essential linux-headers-$(uname -r)\n\necho \"Installing VirtualBox...\"\napt install -y virtualbox virtualbox-ext-pack\n\necho \"Downloading Windows ISO...\"\n\nsudo -u $SUDO_USER wget -O \"$ISO_PATH\" \"$ISO_URL\"\n\nif [ ! -f \"$ISO_PATH\" ]; then\n    echo \"ISO download failed!\"\n    exit 1\nfi\n\necho \"Download completed.\"\n\necho \"Checking ISO file...\"\n\nFILE_TYPE=$(file \"$ISO_PATH\")\n\nif [[ $FILE_TYPE != *\"ISO 9660\"* ]]; then\n    echo \"Downloaded file is not a valid ISO!\"\n    exit 1\nfi\n\necho \"ISO verified.\"\n\necho \"Creating Virtual Machine...\"\n\nsudo -u $SUDO_USER VBoxManage createvm \\\n--name \"$VM_NAME\" \\\n--ostype Windows11_64 \\\n--register\n\necho \"Configuring hardware...\"\n\nsudo -u $SUDO_USER VBoxManage modifyvm \"$VM_NAME\" \\\n--memory $RAM_MB \\\n--cpus $CPUS \\\n--vram 256 \\\n--graphicscontroller vmsvga \\\n--accelerate3d on \\\n--clipboard-mode bidirectional \\\n--draganddrop bidirectional \\\n--nic1 nat \\\n--boot1 dvd\n\necho \"Creating virtual disk...\"\n\nsudo -u $SUDO_USER VBoxManage createmedium disk \\\n--filename \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\" \\\n--size $DISK_MB \\\n--format VDI\n\necho \"Creating storage controller...\"\n\nsudo -u $SUDO_USER VBoxManage storagectl \"$VM_NAME\" \\\n--name \"SATA Controller\" \\\n--add sata \\\n--controller IntelAhci\n\necho \"Attaching disk...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 0 \\\n--device 0 \\\n--type hdd \\\n--medium \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\"\n\necho \"Attaching Windows ISO...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 1 \\\n--device 0 \\\n--type dvddrive \\\n--medium \"$ISO_PATH\"\n\necho \"\"\necho \"======================================\"\necho \"Setup Complete\"\necho \"======================================\"\necho \"\"\necho \"Open VirtualBox from Applications\"\necho \"\"\necho \"Start VM: $VM_NAME\"\necho \"\"\necho \"Windows installer will launch.\"\necho \"\"\necho \"======================================\"",
+    "timestamp": "2026-03-13T04:38:28.754230"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#!/bin/bash\n\n# -----------------------------\n# CONFIGURATION\n# -----------------------------\n\nVM_NAME=\"Windows11-AutoVM\"\nRAM_MB=12288\nCPUS=6\nDISK_MB=102400\n\nISO_URL=\"https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso\"\n\nISO_NAME=\"windows11.iso\"\n\n# -----------------------------\n\necho \"Starting full Windows VM installation...\"\n\n# Run as root automatically\nif [ \"$EUID\" -ne 0 ]; then\n    echo \"Running with administrator privileges...\"\n    exec sudo bash \"$0\" \"$@\"\nfi\n\nUSER_HOME=$(eval echo \"~$SUDO_USER\")\n\nDOWNLOAD_DIR=\"$USER_HOME/Downloads\"\nISO_PATH=\"$DOWNLOAD_DIR/$ISO_NAME\"\nVM_DIR=\"$USER_HOME/VirtualBox VMs\"\n\necho \"Preparing directories...\"\n\nmkdir -p \"$DOWNLOAD_DIR\"\nmkdir -p \"$VM_DIR\"\n\necho \"Updating system...\"\napt update -y\n\necho \"Installing required packages...\"\napt install -y wget curl dkms build-essential linux-headers-$(uname -r)\n\necho \"Installing VirtualBox...\"\napt install -y virtualbox virtualbox-ext-pack\n\necho \"Downloading Windows ISO...\"\n\nsudo -u $SUDO_USER wget -O \"$ISO_PATH\" \"$ISO_URL\"\n\nif [ ! -f \"$ISO_PATH\" ]; then\n    echo \"ISO download failed!\"\n    exit 1\nfi\n\necho \"Download completed.\"\n\necho \"Checking ISO file...\"\n\nFILE_TYPE=$(file \"$ISO_PATH\")\n\nif [[ $FILE_TYPE != *\"ISO 9660\"* ]]; then\n    echo \"Downloaded file is not a valid ISO!\"\n    exit 1\nfi\n\necho \"ISO verified.\"\n\necho \"Creating Virtual Machine...\"\n\nsudo -u $SUDO_USER VBoxManage createvm \\\n--name \"$VM_NAME\" \\\n--ostype Windows11_64 \\\n--register\n\necho \"Configuring hardware...\"\n\nsudo -u $SUDO_USER VBoxManage modifyvm \"$VM_NAME\" \\\n--memory $RAM_MB \\\n--cpus $CPUS \\\n--vram 256 \\\n--graphicscontroller vmsvga \\\n--accelerate3d on \\\n--clipboard-mode bidirectional \\\n--draganddrop bidirectional \\\n--nic1 nat \\\n--boot1 dvd\n\necho \"Creating virtual disk...\"\n\nsudo -u $SUDO_USER VBoxManage createmedium disk \\\n--filename \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\" \\\n--size $DISK_MB \\\n--format VDI\n\necho \"Creating storage controller...\"\n\nsudo -u $SUDO_USER VBoxManage storagectl \"$VM_NAME\" \\\n--name \"SATA Controller\" \\\n--add sata \\\n--controller IntelAhci\n\necho \"Attaching disk...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 0 \\\n--device 0 \\\n--type hdd \\\n--medium \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\"\n\necho \"Attaching Windows ISO...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 1 \\\n--device 0 \\\n--type dvddrive \\\n--medium \"$ISO_PATH\"\n\necho \"\"\necho \"======================================\"\necho \"Setup Complete\"\necho \"======================================\"\necho \"\"\necho \"Open VirtualBox from Applications\"\necho \"\"\necho \"Start VM: $VM_NAME\"\necho \"\"\necho \"Windows installer will launch.\"\necho \"\"\necho \"======================================\"",
+    "timestamp": "2026-03-13T03:55:20.136275"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#!/bin/bash\n\n# -----------------------------\n# CONFIGURATION\n# -----------------------------\n\nVM_NAME=\"Windows11-AutoVM\"\nRAM_MB=12288\nCPUS=6\nDISK_MB=102400\n\nISO_URL=\"https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso\"\n\nISO_NAME=\"windows11.iso\"\n\n# -----------------------------\n\necho \"Starting full Windows VM installation...\"\n\n# Run as root automatically\nif [ \"$EUID\" -ne 0 ]; then\n    echo \"Running with administrator privileges...\"\n    exec sudo bash \"$0\" \"$@\"\nfi\n\nUSER_HOME=$(eval echo \"~$SUDO_USER\")\n\nDOWNLOAD_DIR=\"$USER_HOME/Downloads\"\nISO_PATH=\"$DOWNLOAD_DIR/$ISO_NAME\"\nVM_DIR=\"$USER_HOME/VirtualBox VMs\"\n\necho \"Preparing directories...\"\n\nmkdir -p \"$DOWNLOAD_DIR\"\nmkdir -p \"$VM_DIR\"\n\necho \"Updating system...\"\napt update -y\n\necho \"Installing required packages...\"\napt install -y wget curl dkms build-essential linux-headers-$(uname -r)\n\necho \"Installing VirtualBox...\"\napt install -y virtualbox virtualbox-ext-pack\n\necho \"Downloading Windows ISO...\"\n\nsudo -u $SUDO_USER wget -O \"$ISO_PATH\" \"$ISO_URL\"\n\nif [ ! -f \"$ISO_PATH\" ]; then\n    echo \"ISO download failed!\"\n    exit 1\nfi\n\necho \"Download completed.\"\n\necho \"Checking ISO file...\"\n\nFILE_TYPE=$(file \"$ISO_PATH\")\n\nif [[ $FILE_TYPE != *\"ISO 9660\"* ]]; then\n    echo \"Downloaded file is not a valid ISO!\"\n    exit 1\nfi\n\necho \"ISO verified.\"\n\necho \"Creating Virtual Machine...\"\n\nsudo -u $SUDO_USER VBoxManage createvm \\\n--name \"$VM_NAME\" \\\n--ostype Windows11_64 \\\n--register\n\necho \"Configuring hardware...\"\n\nsudo -u $SUDO_USER VBoxManage modifyvm \"$VM_NAME\" \\\n--memory $RAM_MB \\\n--cpus $CPUS \\\n--vram 256 \\\n--graphicscontroller vmsvga \\\n--accelerate3d on \\\n--clipboard-mode bidirectional \\\n--draganddrop bidirectional \\\n--nic1 nat \\\n--boot1 dvd\n\necho \"Creating virtual disk...\"\n\nsudo -u $SUDO_USER VBoxManage createmedium disk \\\n--filename \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\" \\\n--size $DISK_MB \\\n--format VDI\n\necho \"Creating storage controller...\"\n\nsudo -u $SUDO_USER VBoxManage storagectl \"$VM_NAME\" \\\n--name \"SATA Controller\" \\\n--add sata \\\n--controller IntelAhci\n\necho \"Attaching disk...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 0 \\\n--device 0 \\\n--type hdd \\\n--medium \"$VM_DIR/$VM_NAME/$VM_NAME.vdi\"\n\necho \"Attaching Windows ISO...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 1 \\\n--device 0 \\\n--type dvddrive \\\n--medium \"$ISO_PATH\"\n\necho \"\"\necho \"======================================\"\necho \"Setup Complete\"\necho \"======================================\"\necho \"\"\necho \"Open VirtualBox from Applications\"\necho \"\"\necho \"Start VM: $VM_NAME\"\necho \"\"\necho \"Windows installer will launch.\"\necho \"\"\necho \"======================================\"",
+    "timestamp": "2026-03-13T03:48:39.611551"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#!/bin/bash\n\n# -------- VM CONFIG --------\nVM_NAME=\"Windows11-AutoVM\"\nRAM_MB=12288\nCPUS=6\nDISK_MB=102400\n\nISO_URL=\"https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso\"\nISO_PATH=\"$HOME/Downloads/windows11.iso\"\n\necho \"Starting automatic VirtualBox + Windows 11 setup...\"\n\n# Run as root automatically\nif [ \"$EUID\" -ne 0 ]; then\n    exec sudo bash \"$0\" \"$@\"\nfi\n\nUSER_HOME=$(eval echo \"~$SUDO_USER\")\n\necho \"Updating system...\"\napt update -y\n\necho \"Installing dependencies...\"\napt install -y wget curl dkms build-essential linux-headers-$(uname -r)\n\necho \"Installing VirtualBox...\"\napt install -y virtualbox virtualbox-ext-pack\n\nmkdir -p \"$USER_HOME/Downloads\"\n\necho \"Downloading Windows 11 ISO (this may take some time)...\"\nsudo -u $SUDO_USER wget -O \"$ISO_PATH\" \"$ISO_URL\"\n\necho \"Creating VM...\"\nsudo -u $SUDO_USER VBoxManage createvm \\\n--name \"$VM_NAME\" \\\n--ostype Windows11_64 \\\n--register\n\necho \"Configuring hardware...\"\n\nsudo -u $SUDO_USER VBoxManage modifyvm \"$VM_NAME\" \\\n--memory $RAM_MB \\\n--cpus $CPUS \\\n--vram 256 \\\n--graphicscontroller vmsvga \\\n--accelerate3d on \\\n--clipboard-mode bidirectional \\\n--draganddrop bidirectional \\\n--nic1 nat \\\n--boot1 dvd\n\necho \"Creating virtual disk...\"\n\nsudo -u $SUDO_USER VBoxManage createmedium disk \\\n--filename \"$USER_HOME/VirtualBox VMs/$VM_NAME/$VM_NAME.vdi\" \\\n--size $DISK_MB \\\n--format VDI\n\nsudo -u $SUDO_USER VBoxManage storagectl \"$VM_NAME\" \\\n--name \"SATA Controller\" \\\n--add sata \\\n--controller IntelAhci\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 0 \\\n--device 0 \\\n--type hdd \\\n--medium \"$USER_HOME/VirtualBox VMs/$VM_NAME/$VM_NAME.vdi\"\n\necho \"Attaching Windows ISO...\"\n\nsudo -u $SUDO_USER VBoxManage storageattach \"$VM_NAME\" \\\n--storagectl \"SATA Controller\" \\\n--port 1 \\\n--device 0 \\\n--type dvddrive \\\n--medium \"$ISO_PATH\"\n\necho \"\"\necho \"======================================\"\necho \"Windows VM created successfully\"\necho \"VM Name: $VM_NAME\"\necho \"\"\necho \"Open VirtualBox GUI and press START\"\necho \"======================================\"",
+    "timestamp": "2026-03-13T03:46:01.437296"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "powercfg -h off",
+    "timestamp": "2026-03-12T23:28:41.147316"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Get-ScheduledTask -TaskPath \"\\Microsoft\\Windows\\Application Experience\\\" | Disable-ScheduledTask",
+    "timestamp": "2026-03-12T23:18:49.283777"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Stop-Service WSearch\nSet-Service WSearch -StartupType Disabled\nGet-AppxPackage *WebExperience* | Remove-AppxPackage",
+    "timestamp": "2026-03-12T23:12:39.365842"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Stop-Service SysMain\nSet-Service SysMain -StartupType Disabled",
+    "timestamp": "2026-03-12T23:10:23.712360"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "& ([scriptblock]::Create((irm \"https://debloat.raphi.re/\")))",
+    "timestamp": "2026-03-12T23:04:40.128828"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Shannu@9553",
+    "timestamp": "2026-03-12T22:57:40.860104"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n\nint comp=0;\n\nvoid maxmin(int a[],int low,int high,int *max,int *min)\n{\nif(low==high)\n{\n*max=a[low];\n*min=a[low];\n}\nelse if(high==low+1)\n{\ncomp++;\nif(a[low]>a[high])\n{\n*max=a[low];\n*min=a[high];\n}\nelse\n{\n*max=a[high];\n*min=a[low];\n}\n}\nelse\n{\nint mid=(low+high)/2;\nint max1,min1,max2,min2;\n\nmaxmin(a,low,mid,&max1,&min1);\nmaxmin(a,mid+1,high,&max2,&min2);\n\ncomp++;\nif(max1>max2)\n*max=max1;\nelse\n*max=max2;\n\ncomp++;\nif(min1<min2)\n*min=min1;\nelse\n*min=min2;\n}\n}\n\nint main()\n{\nint n;\nscanf(\"%d\",&n);\n\nint a[n];\n\nfor(int i=0;i<n;i++)\nscanf(\"%d\",&a[i]);\n\nint max,min;\n\nmaxmin(a,0,n-1,&max,&min);\n\nprintf(\"Max: %d\\n\",max);\nprintf(\"Min: %d\\n\",min);\nprintf(\"Comparisons: %d\",comp);\n\nreturn 0;\n}",
+    "timestamp": "2026-03-12T22:42:59.420901"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include <stdio.h>\n\nint comparisons=0;\nint merges=0;\n\nvoid merge(int arr[],int l,int m,int r)\n{\nint i,j,k;\nint n1=m-l+1;\nint n2=r-m;\n\nint L[n1],R[n2];\n\nfor(i=0;i<n1;i++)\nL[i]=arr[l+i];\n\nfor(j=0;j<n2;j++)\nR[j]=arr[m+1+j];\n\ni=0;\nj=0;\nk=l;\n\nmerges++;\n\nwhile(i<n1 && j<n2)\n{\ncomparisons++;\n\nif(L[i]<=R[j])\n{\narr[k]=L[i];\ni++;\n}\nelse\n{\narr[k]=R[j];\nj++;\n}\nk++;\n}\n\nwhile(i<n1)\n{\narr[k]=L[i];\ni++;\nk++;\n}\n\nwhile(j<n2)\n{\narr[k]=R[j];\nj++;\nk++;\n}\n}\n\nvoid mergeSort(int arr[],int l,int r)\n{\nif(l<r)\n{\nint m=(l+r)/2;\n\nmergeSort(arr,l,m);\nmergeSort(arr,m+1,r);\nmerge(arr,l,m,r);\n}\n}\n\nint main()\n{\nint n;\nscanf(\"%d\",&n);\n\nint arr[n];\n\nfor(int i=0;i<n;i++)\nscanf(\"%d\",&arr[i]);\n\nmergeSort(arr,0,n-1);\n\nprintf(\"Sorted array: \");\nfor(int i=0;i<n;i++)\nprintf(\"%d \",arr[i]);\n\nprintf(\"\\nComparisons: %d\",comparisons);\nprintf(\"\\nMerges: %d\",merges);\n\nreturn 0;\n}",
+    "timestamp": "2026-03-12T22:37:43.674511"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "SELECT SUM(purchase_amt) AS Total_Amount FROM AGG_ORDERS;\n\nSELECT AVG(purchase_amt) AS Average_Amount FROM AGG_ORDERS;",
+    "timestamp": "2026-03-04T13:05:56.584954"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "INSERT INTO SPORTS_EQUIPMENT VALUES\n('S001','Soccer Ball','Nike',25,'Balls',100),\n('S002','Basketball','Spalding',30,'Balls',50),\n('S003','Tennis Racket','Wilson',120,'Rackets',20),\n('S004','Baseball Glove','Rawlings',60,'Gloves',15),\n('S005','Golf Club Set','Callaway',400,'Clubs',10);\n\nUPDATE SPORTS_EQUIPMENT\nSET STOCK = STOCK + 25\nWHERE CATEGORY = 'Balls';",
+    "timestamp": "2026-03-04T13:03:27.076175"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "SELECT SUBSTRING(REPLACE(USER_REVIEW,'bad','good'),1,7) AS FIRST_7_CHARS\nFROM E_COMMERCE_REVIEWS;",
+    "timestamp": "2026-03-04T12:59:52.041824"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "SELECT REPLACE(USER_REVIEW,'bad','good') FROM E_COMMERCE_REVIEWS;\n\nSELECT SUBSTRING(USER_REVIEW,1,7) AS FIRST_7_CHARS \nFROM E_COMMERCE_REVIEWS;",
+    "timestamp": "2026-03-04T12:54:55.478999"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "CREATE TABLE DESIGNER_COLLECTIONS (\nCOLLECTION_ID VARCHAR(10),\nDESIGNER_NAME VARCHAR(50),\nCOLLECTION_YEAR INT(6)\n);\n\nCREATE TABLE CUSTOMER_ORDERS (\nORDER_ID VARCHAR(10),\nCUSTOMER_NAME VARCHAR(50),\nORDER_DATE DATE\n);\n\nALTER TABLE DESIGNER_COLLECTIONS \nMODIFY COLLECTION_YEAR INT;\n\nRENAME TABLE DESIGNER_COLLECTIONS TO FASHION_DESIGNER_COLLECTIONS;",
+    "timestamp": "2026-03-04T12:51:58.093799"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "SELECT MEMBER_NAME, MEMBERSHIP_TYPE FROM MEMBERS;\n\nSELECT BOOK_TITLE FROM BOOKS;\n\nSELECT * FROM BOOKS WHERE BOOK_ID = 203;",
+    "timestamp": "2026-03-04T12:47:55.273334"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "update Machines  set MaintenanceDate ='2024-07-10' where MachineID='1';\nupdate Parts  set Quantity='25' where PartID ='203';\nselect * from  Machines where PurchaseDate <'2021-01-01' and MaintenanceDate is null;\nselect * from Parts where MachineID = 2 or MachineID =4;",
+    "timestamp": "2026-02-18T13:08:13.054485"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "update bank_accounts set balance=balance - 100 where account_id=1;\ninsert into transaction_logs(transaction_id,account_id,transaction_type,amount)values(1,1,'Debit',100);\nrollback;\nstart transaction;\nupdate bank_accounts set balance=balance+2000 where account_id=2;\ninsert into transaction_logs(transaction_id,account_id,transaction_type,amount)values(2,1,'Credit',2000);\ncommit;",
+    "timestamp": "2026-02-18T13:06:29.509226"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "delete from Transactions where Amount <100.00 and TransactionType='Withdrawal';\n\nselect * from Accounts where AccountType ='Savings' and Balance >2000.00 and \nBalance <3000.00;",
+    "timestamp": "2026-02-18T13:04:06.346448"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "update Events set Location ='Virtual' where EventDate between '2024-08-01' and '2024-09-01' or EventName ='Leadership Forum' and Location ='New York';\nselect * from Events where EventDate between '2024-08-01' and '2024-09-30' and Location != 'New York';",
+    "timestamp": "2026-02-18T13:02:34.985606"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "update Flights set FlightNumber ='B103-Updated' where FlightID=1003;\nupdate Bookings set BookingDate='2024-07-25' where BookingID='2002';\nselect * from Passengers where PassengerID=1203 and PassengerName='Alice Johnson';\nselect * from Flights where FlightNumber='A101' or FlightNumber ='A102';",
+    "timestamp": "2026-02-18T12:58:52.696929"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "update student_enrollment set enrollment_status ='Dropped' where student_id =1 and course_id=102;\nselect * from\nstudent_enrollment;\nrollback;\nupdate student_enrollment set enrollment_status ='Enrolled' where student_id =2 and course_id =101;\ncommit;",
+    "timestamp": "2026-02-18T12:56:09.798790"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "create table Experiments(ExperimentID int,ResearcherID int,Title varchar(255),DateStarted DATE ,Objective varchar(100));\ncreate table GeneSequences(SequenceID int,ExperimentID int,Gene varchar(255),SequenceData TEXT,DateRecorded DATE);\ncreate table Modifications(ModificationID int,SequenceID int,ModificationType varchar(255),DateApplied DATE,Outcome varchar(100));\ndrop table Modifications;\nalter table Experiments add Status varchar(50);",
+    "timestamp": "2026-02-18T12:52:02.852727"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "insert into Suppliers values(1601,'Tech Supplies Ltd','contact@techsupplies.com'),(1602,'Home Goods Inc','info@homegoods.com'),(1603,'Eco Products','sales@ecoproducts.com'),(1604,'Office Essentials','support@officeessentials.com'),(1605,'Fashion World','customer@fashionworld.com');\ninsert into Products values(1001,'Premium Laptop',1601,1200.00),(1002,'Basic Mouse',1602,35.00),(1003,'Premium Headphones',1601,150.00),(1004,'Office Chair',1604,220.00),(1005,'Gaming Monitor',1603,300.00);\ninsert into Orders values(1701,'2024-01-15',350.00),(1702,'2024-02-20',500.00),(1703,'2024-03-10',180.00),(1704,'2024-04-05',220.00),(1705,'2024-05-12',150.00);\ninsert into OrderItems values(2001,1701,1001,1),(2002,1701,1003,2),(2003,1702,1005,1),(2004,1703,1004,1),(2005,1704,1006,1);\nalter table Products add Category varchar(50);\ndelete from Orders where (OrderDate<'2024-03-11' and TotalAmount<200) or OrderID in (1703,1704);\ndelete from OrderItems where Quantity=1 or ProductID =1005;\nrename table Suppliers to SupplyPartners;",
+    "timestamp": "2026-02-18T12:49:04.627022"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "/* -------------------------\n   1. Insert into Suppliers\n--------------------------*/\n\nINSERT INTO Suppliers VALUES\n(1601,'Tech Supplies Ltd','contact@techsupplies.com'),\n(1602,'Home Goods Inc','info@homegoods.com'),\n(1603,'Eco Products','sales@ecoproducts.com'),\n(1604,'Office Essentials','support@officeessentials.com'),\n(1605,'Fashion World','customers@fashionworld.com');\n\n\n/* -------------------------\n   2. Insert into Products\n--------------------------*/\n\nINSERT INTO Products VALUES\n(1001,'Premium Laptop',1601,1200.00),\n(1002,'Basic Mouse',1602,35.00),\n(1003,'Premium Headphones',1603,150.00),\n(1004,'Office Chair',1604,220.00),\n(1005,'Gaming Monitor',1605,300.00);\n\n\n/* -------------------------\n   3. Insert into Orders\n--------------------------*/\n\nINSERT INTO Orders VALUES\n(1701,'2024-01-15',350.00),\n(1702,'2024-03-10',150.00),\n(1703,'2024-03-05',180.00),\n(1704,'2024-03-12',500.00);\n\n\n/* -------------------------\n   4. Insert into OrderItems\n--------------------------*/\n\nINSERT INTO OrderItems VALUES\n(1,1701,1001,2),\n(2,1702,1002,1),\n(3,1703,1003,1),\n(4,1704,1004,3),\n(5,1704,1005,1);\n\n\n/* -------------------------\n   5. Add Category Column\n--------------------------*/\n\nALTER TABLE Products\nADD Category VARCHAR(50);\n\n\n/* -------------------------\n   6. Delete Required Orders\n--------------------------*/\n\nDELETE FROM Orders\nWHERE (OrderDate < '2024-03-11' AND TotalAmount < 200)\n   OR OrderID IN (1703,1704);\n\n\n/* -------------------------\n   7. Delete Required OrderItems\n--------------------------*/\n\nDELETE FROM OrderItems\nWHERE Quantity = 1\n   OR ProductID = 1005;\n\n\n/* -------------------------\n   8. Rename Suppliers Table\n--------------------------*/\n\nALTER TABLE Suppliers\nRENAME TO SupplyPartners;\n\n\n/* -------------------------\n   9. Display Updated Tables\n--------------------------*/\n\nSELECT * FROM SupplyPartners;\nSELECT * FROM Products;\nSELECT * FROM Orders;\nSELECT * FROM OrderItems;",
+    "timestamp": "2026-02-18T12:40:30.227824"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "INSERT INTO SupplyPartners (SupplierID, SupplierName, ContactEmail) VALUES\n(1601, 'Tech Supplies Ltd', 'contact@techsupplies.com'),\n(1602, 'Home Goods Inc', 'info@homegoods.com'),\n(1603, 'Eco Products', 'sales@ecoproducts.com'),\n(1604, 'Office Essentials', 'support@officeessentials.com'),\n(1605, 'Fashion World', 'customers@fashionworld.com');\n\n\nINSERT INTO Products (ProductID, ProductName, SupplierID, Price) VALUES\n(1001, 'Premium Laptop', 1601, 1200.00),\n(1002, 'Basic Mouse', 1602, 35.00),\n(1003, 'Premium Headphones', 1603, 150.00),\n(1004, 'Office Chair', 1604, 220.00),\n(1005, 'Gaming Monitor', 1605, 300.00);",
+    "timestamp": "2026-02-18T12:27:47.287583"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "INSERT INTO Suppliers (SupplierID, SupplierName, Email) VALUES\n(1601, 'Tech Supplies Ltd', 'contact@techsupplies.com'),\n(1602, 'Home Goods Inc', 'info@homegoods.com'),\n(1603, 'Eco Products', 'sales@ecoproducts.com'),\n(1604, 'Office Essentials', 'support@officeessentials.com'),\n(1605, 'Fashion World', 'customers@fashionworld.com');\n\n\nINSERT INTO Products (ProductID, ProductName, SupplierID, Price) VALUES\n(1001, 'Premium Laptop', 1601, 1200.00),\n(1002, 'Basic Mouse', 1602, 35.00),\n(1003, 'Premium Headphones', 1603, 150.00),\n(1004, 'Office Chair', 1604, 220.00),\n(1005, 'Gaming Monitor', 1605, 300.00);",
+    "timestamp": "2026-02-18T12:19:20.227823"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include <stdio.h>\nvoid heapify(int arr[], int n, int i){\nint largest = i;\nint left = 2 * i + 1;\nint right = 2 * i + 2;\nint temp;\n\nif (left < n && arr[left] > arr[largest]){\nlargest = left;\n}\n\nif (right < n && arr[right] > arr[largest]){\nlargest = right;\n}\n\nif (largest != i){\ntemp = arr[i];\narr[i] = arr[largest];\narr[largest] = temp;\nheapify(arr, n, largest);\n}\n}\n\nvoid heapSort(int arr[], int n){\nint i, temp;\nfor (i = n / 2 - 1; i >= 0; i--){\nheapify(arr, n, i);\n}\nfor (i = n - 1; i > 0; i--){\ntemp = arr[0];\narr[0] = arr[i];\narr[i] = temp;\nheapify(arr, i, 0);\n}\n}\n\nint main(){\nint n;\nscanf(\"%d\", &n);\nint arr[n];\nint i;\nfor (i = 0; i < n; i++){\nscanf(\"%d\", &arr[i]);\n}\nheapSort(arr, n);\nfor (i = 0; i < n; i++){\nprintf(\"%d\", arr[i]);\nif (i < n - 1){\nprintf(\" \");\n}\n}\nreturn 0;\n}",
+    "timestamp": "2026-02-15T14:18:56.860830"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\nvoid heapify(int a[],int n,int i){\nint smallest=i;\nint l=2*i+1;\nint r=2*i+2;\nif(l<n && a[l]<a[smallest])\nsmallest=l;\nif(r<n && a[r]<a[smallest])\nsmallest=r;\nif(i!=smallest){\nint t=a[i];\na[i]=a[smallest];\na[smallest]=t;\n}\n}\nint main(){\nint n;\nscanf(\"%d\",&n);\nint a[n];\nfor(int i=0;i<n;i++){\nscanf(\"%d\",&a[i]);\n}\nfor(int i=n/2-1;i>=0;i--){\nheapify(a,n,i);\n}\nfor(int i=0;i<n;i++){\nprintf(\"%d\",a[i]);\nif(i!=n-1){\nprintf(\" \");\n}\n}\n}",
+    "timestamp": "2026-02-15T14:05:34.332653"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n#include<math.h>\n#define max 100000\nint heap[max];\nint size=0;\nvoid swap(int *a, int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapifyup(int index){\nwhile(index>0){\nint parent =(index-1)/2;\n if(heap[parent]<=heap[index])\nbreak;\nswap(&heap[parent],&heap[index]);\nindex=parent;\n}\n}\nvoid heapifydown(int index){\nwhile(1){\nint smallest =index;\nint left=2*index+1;\nint right=2*index+2;\nif(left<size && heap[left]<heap[smallest])\nsmallest=left;\nif(right<size && heap[right]<heap[smallest])\nsmallest=right;\nif(smallest==index)\nbreak;\nswap(&heap[index],&heap[smallest]);\nindex=smallest;\n}\n}\nvoid insert (int value){\nheap[size]=value;\nheapifyup(size);\nsize++;\n}\nvoid deletemin(){\nif(size==0)\nreturn;\nheap[0]=heap[size-1];\nsize--;\nheapifydown(0);\n}\nvoid printheaparray(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nfor(int i=0;i<size;i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n}\nvoid printheight(){\nif(size==0){\nprintf(\"0\\n\");\nreturn;\n}\nint height=(int)log2(size)+1;\nprintf(\"%d\\n\",height);\n}\nvoid printlevels(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nint level=0;\nint count=0;\nint elements=1;\nfor(int i=0;i<size;i++){\nprintf(\"%d \",heap[i]);\ncount++;\nif(count==elements){\nif(i!=size-1)\nprintf(\"|\");\nlevel++;\ncount=0;\nelements=1<<level;\n}\n}\nprintf(\"\\n\");\n}\nint main(){\nint N,D,M,X;\nscanf(\"%d\",&N);\nfor(int i=0;i<N;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nscanf(\"%d\",&D);\nfor(int i=0;i<D;i++)\ndeletemin();\nscanf(\"%d\",&M);\nfor(int i=0;i<M;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nprintheaparray();\nif(size==0)\nprintf(\"-1\\n\");\nelse\nprintf(\"%d\\n\",heap[0]);\nprintheight();\nprintlevels();\n}",
+    "timestamp": "2026-02-15T13:48:18.062019"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n#include<math.h>\n#define max 200005\nlong long h[max];\nint sz=0;\nvoid swap(long long *a, long long *b){\nlong long t=*a;\n*a=*b;\n*b=t;\n}\nvoid up(int i){\nwhile(i && h[(i-1)/2]<h[i]){\nswap(&h[i],&h[(i-1)/2]);\ni=(i-1)/2;\n}\n}\nvoid down(int i){\nwhile(1){\nint l=2*i+1, r=2*i+2,m=i;\nif(l<sz && h[l]>h[m])\nm=l;\nif(r<sz && h[r]>h[m])\nm=r;\nif(m==i)\nbreak;\nswap(&h[i],&h[m]);\ni=m;\n}\n}\nint main(){\nint q,t;\nscanf(\"%d\",&q);\nwhile(q--){\nscanf(\"%d\",&t);\nif(t==1){\nscanf(\"%lld\",&h[sz]);\nup(sz++);\n}\nelse if(sz){\nh[0]=h[--sz];\ndown(0);\n}\n}\nif(!sz){\nprintf(\"-1\\n-1\\n0\\n-1\\n\");\nreturn 0;\n}\nfor(int i=0;i<sz;i++)\nprintf(\"%lld%c\",h[i],i+1<sz?' ' :'\\n');\nprintf(\"%lld\\n\",h[0]);\nprintf(\"%d\\n\",(int)log2(sz)+1);\nint i=0,lvl=0;\nwhile(i<sz){\nint cnt=1<<lvl++;\nfor(int j=0;j<cnt && i<sz;j++)\nprintf(\"%lld%c\",h[i++],j+1<cnt && i<sz?' ' :'\\n');\nif(i<sz)\nprintf(\"|\");\n}\nprintf(\"\\n\");\n}",
+    "timestamp": "2026-02-15T13:29:42.401380"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\nvoid heapify(int a[],int n,int i){\nint biggest=i;\nint l=2*i+1;\nint r=2*i+2;\nif(l<n && a[l]>a[biggest])\nbiggest=l;\nif(r<n && a[r]>a[biggest])\nbiggest=r;\nif(biggest!=i){\nint t=a[i];\na[i]=a[biggest];\na[biggest]=t;\nheapify(a,n,biggest);\n}\n}\nint main(){\nint n;\nscanf(\"%d\",&n);\nint a[n];\nfor(int i=0;i<n;i++){\nscanf(\"%d\",&a[i]);\n}\nfor(int i=n/2-1;i>=0;i--){\nheapify(a,n,i);\n}\nfor(int i=0;i<n;i++){\nprintf(\"%d\",a[i]);\nif(i!=n-1){\nprintf(\" \");\n}\n}\n}",
+    "timestamp": "2026-02-15T13:20:45.321998"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n#include<math.h>\n#define max 100000\nint heap[max];\nint size=0;\nvoid swap(int *a, int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapifyup(int index){\nwhile(index>0){\nint parent =(index-1)/2;\n if(heap[parent]<=heap[index])\nbreak;\nswap(&heap[parent],&heap[index]);\nindex=parent;\n}\n}\nvoid heapifydown(int index){\nwhile(1){        \nint smallest =index;\nint left=2*index+1;\nint right=2*index+2;\nif(left<size && heap[left]<heap[smallest])\nsmallest=left;\nif(right<size && heap[right]<heap[smallest])\nsmallest=right;\nif(smallest==index)\nbreak;\nswap(&heap[index],&heap[smallest]);\nindex=smallest;\n}\n}\nvoid insert (int value){\nheap[size]=value;\nheapifyup(size);\nsize++;\n}\nvoid deletemin(){\nif(size==0){\nreturn;\nheap[0]=heap[size-1];\nsize--;\nheapifydown(0);\n}\n}\nvoid printheaparray(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nfor(int i=0;i<size;i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n}\nvoid printheight(){\nif(size==0){\nprintf(\"0\\n\");\nreturn;\n}\nint height=(int)log2(size)+1;\nprintf(\"%d\\n\",height);\n}\nvoid printlevels(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nint level=0;\nint count=0;\nint elements=1;\nfor(int i=0;i<size;i++){\nprintf(\"%d \",heap[i]);\ncount++;\nif(count==elements){\nif(i!=size-1)\nprintf(\"|\");\nlevel++;\ncount=0;\nelements=1<<level;\n}\n}\nprintf(\"\\n\");\n}\nint main(){\nint N,D,M,X;\nscanf(\"%d\",&N);\nfor(int i=0;i<N;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nscanf(\"%d\",&D);\nfor(int i=0;i<D;i++)\ndeletemin();\nscanf(\"%d\",&M);\nfor(int i=0;i<M;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nprintheaparray();\nif(size==0)\nprintf(\"-1\\n\");\nelse\nprintf(\"%d\\n\",heap[0]);\nprintheight();\nprintlevels();\n}",
+    "timestamp": "2026-02-12T10:43:29.846874"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n#include<math.h>\n#define max 100000\nint heap[max];\nint size=0;\nvoid swap(int *a, int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapifyup(int index){\nwhile(index>0){\nint parent =(index-1)/2;\n if(heap[parent]<=heap[index])\nbreak;\nswap(&heap[parent],&heap[index]);\nindex=parent;\n}\n}\nvoid heapifydown(int index){\nwhile(1){        \nint smallest =index;\nint left=2*index+1;\nint right=2*index+2;\nif(left<size && heap[left]<heap[smallest])\nsmallest=left;\nif(right<size && heap[right]<heap[smallest])\nsmallest=right;\nif(smallest==index)\nbreak;\nswap(&heap[index],&heap[smallest]);\nindex=smallest;\n}\n}\nvoid insert (int value){\nheap[size]=value;\nheapifyup(size);\nsize++;\n}\nvoid deletemin(){\nif(size==0){\nreturn;\nheap[0]=heap[size-1];\nsize--;\nheapifydown(0);\n}\n}\nvoid printheaparray(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nfor(int i=0;i<size;i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n}\nvoid printheight(){\nif(size==0){\nprintf(\"0\\n\");\nreturn;\n}\nint height=(int)log2(size)+1;\nprintf(\"%d\\n\",height);\n}\nvoid printlevels(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nint level=0;\nint count=0;\nint elements=1;\nfor(int i=0;i<size;i++){\nprintf(\"%d \",heap[i]);\ncount++;\nif(count==elements){\nif(i!=size-1)\nprintf(\"|\");\nlevel++;\ncount=0;\nelements=1<<level;\n}\n}\nprintf(\"\\n\");\n}\nint main(){\nint N,D,M,X;\nscanf(\"%d\",&N);\nfor(int i=0;i<N;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nscanf(\"%d\",&D);\nfor(int i=0;i<D;i++)\ndeletemin();\nscanf(\"%d\",&M);\nfor(int i=0;i<M;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nprintheaparray();\nif(size==0)\nprintf(\"-1\\n\");\nelse\nprintf(\"%d\\n\",heap[0]);\nprintheight();\nprintlevels();\n}",
+    "timestamp": "2026-02-12T10:19:39.724266"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\n#include<math.h>\n#define max 100000\nint heap[max];\nint size=0;\nvoid swap(int *a, int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapifyup(int index){\nwhile(index>0){\nint parent =(index-1)/2;\n if(heap[parent]<=heap[index])\nbreak;\nswap(&heap[parent],&heap[index]);\nindex=parent;\n}\n}\nvoid heapifydown(int index){\nwhile(1){        \nint smallest =index;\nint left=2*index+1;\nint right=2*index+2;\nif(left<size && heap[left]<heap[smallest])\nsmallest=left;\nif(right<size && heap[right]<heap[smallest])\nsmallest=right;\nif(smallest==index)\nbreak;\nswap(&heap[index],&heap[smallest]);\nindex=smallest;\n}\n}\nvoid insert (int value){\nheap[size]=value;\nheapifyup(size);\nsize++;\n}\nvoid deletemin(){\nif(size==0){\nreturn;\nheap[0]=heap[size-1];\nsize--;\nheapifydown(0);\n}\n}\nvoid printheaparray(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nfor(int i=0;i<size;i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n}\nvoid printheight(){\nif(size==0){\nprintf(\"0\\n\");\nreturn;\n}\nint height=(int)log2(size)+1;\nprintf(\"%d\\n\",height);\n}\nvoid printlevels(){\nif(size==0){\nprintf(\"-1\\n\");\nreturn;\n}\nint level=0;\nint count=0;\nint elements=1;\nfor(int i=0;i<size;i++){\nprintf(\"%d \",heap[i]);\ncount++;\nif(count==elements){\nif(i!=size-1)\nprintf(\"|\");\nlevel++;\ncount=0;\nelements=1<<level;\n}\n}\nprintf(\"\\n\");\n}\nint main(){\nint N,D,M,X;\nscanf(\"%d\",&N);\nfor(int i=0;i<N;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nscanf(\"%d\",&D);\nfor(int i=0;i<D;i++)\ndeletemin();\nscanf(\"%d\",&M);\nfor(int i=0;i<M;i++){\nscanf(\"%d\",&X);\ninsert(X);\n}\nprintheaparray();\nif(size==0)\nprintf(\"-1\\n\");\nelse\nprintf(\"%d\\n\",heap[0]);\nprintheight();\nprintlevels();\n}",
+    "timestamp": "2026-02-12T10:13:36.284664"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\nvoid swap(int *a,int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapify(int a[],int n,int i){\nint smallest=i;\nint l=2*i+1;\nint r=2*i+2;\nif(l<n && a[l]<a[smallest]){\nsmallest=l;\n}\nif(r<n &&a[r]< a[smallest]){\nsmallest=r;\n}\nif(smallest!=i){\nswap(&a[i],&a[smallest]);\nheapify(a,n,smallest);\n}\n}\nint main(){\nint n;\nscanf(\"%d \",&n);\nint a[n];\nfor(int i=0;i<n;i++){\nscanf(\"%d \",&a[i]);\n}\nfor(int i=n/2-1;i>=0;i--){\nheapify(a,n,i);\n}\nfor(int i=0;i<n;i++){\nprintf(\"%d\",a[0]);\nif(i!=n-1){\nprintf(\" \");\n}\na[0]=a[n-1-i];\nheapify(a,n-1-i,0);\n}\nreturn 0;\n}",
+    "timestamp": "2026-02-10T11:54:53.209744"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include<stdio.h>\nvoid swap(int *a,int *b){\nint t=*a;\n*a=*b;\n*b=t;\n}\nvoid heapify(int a[],int n,int i){\nint smallest=i;\nint l=2*i+1;\nint r=2*i+2;\nif(l<n && a[l]<a[smallest]){\nsmallest=l;\n}\nif(r<n &&a[r]< a[smallest]){\nsmallest=r;\n}\nif(smallest!=i){\nswap(&a[i],&a[smallest]);\nheapify(a,n,smallest);\n}\n}\nint main(){\nint n;\nscanf(\"%d \",&n);\nint a[n];\nfor(int i=0;i<n;i++){\nscanf(\"%d \",&a[i]);\n}\nfor(int i=n/2-1;i>=0;i--){\nheapify(a,n,i);\n}\nfor(int i=0;i<n;i++){\nprintf(\"%d\",a[0]);\nif(i!=n-1){\nprintf(\" \");\n}\na[0]=a[n-1-i];\nheapify(a,n-1-i,0);\n}\nreturn 0;\n}",
+    "timestamp": "2026-02-10T11:53:19.187771"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "int main() {\nint N, D, M;\nint i, x;\n\nscanf(\"%d\", &N);\nfor (i = 0; i < N; i++) {\nscanf(\"%d\", &x);\ninsert(x);\n}\n\nscanf(\"%d\", &D);\nfor (i = 0; i < D; i++) {\ndeleteMin();\n}\n\nscanf(\"%d\", &M);\nfor (i = 0; i < M; i++) {\nscanf(\"%d\", &x);\ninsert(x);\n}\n\n// Line 1: Final heap elements\nif (size == 0) {\nprintf(\"-1\\n\");\nprintf(\"-1\\n\");\nprintf(\"0\\n\");\nprintf(\"-1\\n\");\nreturn 0;\n}\n\nfor (i = 0; i < size; i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n\n// Line 2: Minimum element\nprintf(\"%d\\n\", heap[0]);\n\n// Line 3: Height\nint height = floor(log2(size)) + 1;\nprintf(\"%d\\n\", height);\n\n// Line 4: Level order grouped by levels\nint level = 0;\nint index = 0;\n\nwhile (index < size) {\nint nodes = pow(2, level);\nfor (i = 0; i < nodes && index < size; i++) {\nprintf(\"%d \", heap[index]);\nindex++;\n}\nif (index < size)\n printf(\"| \");\nlevel++;\n}\n\nreturn 0;\n}",
+    "timestamp": "2026-02-10T11:30:19.493231"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include <stdio.h>\n#include <math.h>\n\n#define MAX 100000\n\nint heap[MAX];\nint size = 0;\n\nvoid swap(int *a, int *b) {\nint temp = *a;\n*a = *b;\n*b = temp;\n}\n\nvoid heapifyDown(int i) {\nint smallest = i;\nint left = 2 * i + 1;\nint right = 2 * i + 2;\n\nif (left < size && heap[left] < heap[smallest])\nsmallest = left;\nif (right < size && heap[right] < heap[smallest])\nsmallest = right;\n\nif (smallest != i) {\nswap(&heap[i], &heap[smallest]);\nheapifyDown(smallest);\n}\n}\n\nvoid heapifyUp(int i) {\nint parent = (i - 1) / 2;\nif (i > 0 && heap[parent] > heap[i]) {\nswap(&heap[parent], &heap[i]);\n heapifyUp(parent);\n}\n}\n\nvoid insert(int value) {\nheap[size] = value;\nsize++;\nheapifyUp(size - 1);\n}\n\nvoid deleteMin() {\nif (size == 0)\nreturn;\n\nheap[0] = heap[size - 1];\nsize--;\nheapifyDown(0);\n}\n\nint main() {\nint N, D, M;\nint i, x;\n\nscanf(\"%d\", &N);\nfor (i = 0; i < N; i++) {\nscanf(\"%d\", &x);\ninsert(x);\n}\n\nscanf(\"%d\", &D);\nfor (i = 0; i < D; i++) {\ndeleteMin();\n}\n\nscanf(\"%d\", &M);\nfor (i = 0; i < M; i++) {\nscanf(\"%d\", &x);\ninsert(x);\n}\n\n// Line 1: Final heap elements\nif (size == 0) {\nprintf(\"-1\\n\");\nprintf(\"-1\\n\");\nprintf(\"0\\n\");\nprintf(\"-1\\n\");\nreturn 0;\n}\n\nfor (i = 0; i < size; i++)\nprintf(\"%d \", heap[i]);\nprintf(\"\\n\");\n\n// Line 2: Minimum element\nprintf(\"%d\\n\", heap[0]);\n\n// Line 3: Height\nint height = floor(log2(size)) + 1;\nprintf(\"%d\\n\", height);\n\n// Line 4: Level order grouped by levels\nint level = 0;\nint index = 0;\n\nwhile (index < size) {\nint nodes = pow(2, level);\nfor (i = 0; i < nodes && index < size; i++) {\nprintf(\"%d \", heap[index]);\nindex++;\n}\nif (index < size)\n printf(\"| \");\nlevel++;\n}\n\nreturn 0;\n}",
+    "timestamp": "2026-02-10T11:14:17.285755"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "#include <stdio.h>\n#include <math.h>\n\n#define MAX 100000\n\nint heap[MAX];\nint size = 0;\n\nvoid swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nvoid heapifyDown(int i) {\n    int smallest = i;\n    int left = 2 * i + 1;\n    int right = 2 * i + 2;\n\n    if (left < size && heap[left] < heap[smallest])\n        smallest = left;\n\n    if (right < size && heap[right] < heap[smallest])\n        smallest = right;\n\n    if (smallest != i) {\n        swap(&heap[i], &heap[smallest]);\n        heapifyDown(smallest);\n    }\n}\n\nvoid heapifyUp(int i) {\n    int parent = (i - 1) / 2;\n    if (i > 0 && heap[parent] > heap[i]) {\n        swap(&heap[parent], &heap[i]);\n        heapifyUp(parent);\n    }\n}\n\nvoid insert(int value) {\n    heap[size] = value;\n    size++;\n    heapifyUp(size - 1);\n}\n\nvoid deleteMin() {\n    if (size == 0)\n        return;\n\n    heap[0] = heap[size - 1];\n    size--;\n    heapifyDown(0);\n}\n\nint main() {\n    int N, D, M;\n    int i, x;\n\n    scanf(\"%d\", &N);\n    for (i = 0; i < N; i++) {\n        scanf(\"%d\", &x);\n        insert(x);\n    }\n\n    scanf(\"%d\", &D);\n    for (i = 0; i < D; i++) {\n        deleteMin();\n    }\n\n    scanf(\"%d\", &M);\n    for (i = 0; i < M; i++) {\n        scanf(\"%d\", &x);\n        insert(x);\n    }\n\n    // Line 1: Final heap elements\n    if (size == 0) {\n        printf(\"-1\\n\");\n        printf(\"-1\\n\");\n        printf(\"0\\n\");\n        printf(\"-1\\n\");\n        return 0;\n    }\n\n    for (i = 0; i < size; i++)\n        printf(\"%d \", heap[i]);\n    printf(\"\\n\");\n\n    // Line 2: Minimum element\n    printf(\"%d\\n\", heap[0]);\n\n    // Line 3: Height\n    int height = floor(log2(size)) + 1;\n    printf(\"%d\\n\", height);\n\n    // Line 4: Level order grouped by levels\n    int level = 0;\n    int index = 0;\n\n    while (index < size) {\n        int nodes = pow(2, level);\n        for (i = 0; i < nodes && index < size; i++) {\n            printf(\"%d \", heap[index]);\n            index++;\n        }\n        if (index < size)\n            printf(\"| \");\n        level++;\n    }\n\n    return 0;\n}",
+    "timestamp": "2026-02-10T10:36:00.419630"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2026-02-10T10:25:01.873127"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2026-02-10T10:23:43.333652"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2026-02-10T10:21:06.814124"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2025-08-17T13:00:57.086839"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2025-08-17T12:50:47.933273"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2025-08-17T11:26:46.719176"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "def histogram(l):\n    freq = {}\n    for num in l:\n        freq[num] = freq.get(num, 0) + 1\n    result = [(num, count) for num, count in freq.items()]\n    result.sort(key=lambda x: (x[1], x[0]))\n    return result\n\n\ndef transcript(coursedetails, studentdetails, grades):\n    # Make lookup dictionaries\n    course_dict = dict(coursedetails)\n    student_dict = dict(studentdetails)\n    \n    # Collect grades per student\n    student_grades = {}\n    for roll, course, grade in grades:\n        if roll not in student_grades:\n            student_grades[roll] = []\n        student_grades[roll].append((course, course_dict[course], grade))\n    \n    # Sort each student's courses by coursecode\n    for roll in student_grades:\n        student_grades[roll].sort(key=lambda x: x[0])\n    \n    # Build final list sorted by rollnumber\n    result = []\n    for roll in sorted(student_grades.keys()):\n        result.append((roll, student_dict[roll], student_grades[roll]))\n    \n    return result",
+    "timestamp": "2025-08-17T11:14:06.840053"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Hello! This is a sam dbwbdhbBFBHBDHFBA   fneuFNFNFNFN",
+    "timestamp": "2025-08-12T09:32:46.608035"
+  },
+  {
+    "snippet_name": "bcbdh",
+    "typed_text": "Hello! This is a sam dbwbdhbBFBHBDHFBA   fneuFNFNFNFN",
+    "timestamp": "2025-08-12T03:30:29.033809"
+  },
+  {
+    "snippet_name": "Welcome Message",
+    "typed_text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "timestamp": "2025-08-12T03:29:26.104347"
+  },
+  {
+    "snippet_name": "Welcome Message",
+    "typed_text": "Hello! This is a sample snippet. You can edit or delete it.",
+    "timestamp": "2025-08-12T02:35:32.941958"
+  }
+]
